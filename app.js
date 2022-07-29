@@ -14,6 +14,7 @@ function init() {
     .then(wants => {
       const { choices } = to;
 
+      // make databse query asynchronus
       choices.forEach(choice => {
         if (wants.to === choice) {
           let query = new Query(choice);
