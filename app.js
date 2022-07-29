@@ -18,7 +18,10 @@ function init() {
       choices.forEach(choice => {
         if (wants.to === choice) {
           let query = new Query(choice);
-          eval(`query.${getMethod(choice)}`);
+          eval(`query.${getMethod(choice)}`).then((results) => {
+            console.table(results);
+            init();
+          });
         }
       });
     })
