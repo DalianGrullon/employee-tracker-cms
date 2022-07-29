@@ -1,7 +1,9 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const cTable = require('console.table');
+
 const questions = require('./lib/questions');
+const Query = require('./lib/queryHandlers');
 
 // destructuring questions for inquirer prompts
 const { todo } = questions
