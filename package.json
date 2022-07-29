@@ -1,0 +1,26 @@
+{
+  "name": "employee-tracker-cms",
+  "version": "1.0.0",
+  "description": "Employee Tracker is a Content Management System for business owners that eliminates the burden of organizing all the roles, departments and employees within a given company.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "Content",
+    "Management",
+    "System",
+    "Command",
+    "Line",
+    "Interface"
+  ],
+  "author": "Dalian Grullon",
+  "license": "ISC",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "dotenv": "^16.0.1",
+    "inquirer": "^8.2.4",
+    "mysql2": "^2.3.3"
+  }
+}
