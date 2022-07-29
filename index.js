@@ -1,6 +1,10 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const cTable = require('console.table');
+const questions = require('./lib/questions');
+
+// destructuring questions for inquirer prompts
+const { todo } = questions
 
 require('dotenv').config();
 
@@ -13,3 +17,10 @@ const db = mysql.createConnection(
   },
   console.log(`Connected to database.`)
 );
+
+function init() {
+  inquirer
+    .prompt(todo)
+}
+
+init();
