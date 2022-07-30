@@ -1,6 +1,7 @@
 const mysql = require('mysql2');
 const db = require('../config/connection');
 const cTable = require('console.table');
+const Choices = require('inquirer/lib/objects/choices');
 
 function viewAllDepartments() {
   return db.promise().query(
@@ -58,6 +59,20 @@ async function addAnEmployeeAsManager(employeeFirstName, employeeLastName, emplo
     VALUES (?, ?, ?)`, [employeeFirstName, employeeLastName, roleId]);
 }
 
+async function updateEmployee(name, role) {
+  let [[ { id: roleId } ]] = await getRoleId(role);
+  let [[ { id: employeeId } ]] = await getEmployeeId(name);
+  
+  return db.promise().query(
+    `UPDATE employees
+    SET role_id = (?)
+    WHERE id = (?)`,
+    [roleId, employeeId]
+  );
+}
+
+
+// More helper functions
 function getDepartmentId(name) {
   return db.promise().query(`SELECT id FROM departments WHERE name = (?)`, name);
 }
@@ -70,6 +85,19 @@ function getManagerId(firstName, lastName) {
   return db.promise().query(`SELECT id FROM managers WHERE first_name = (?) AND last_name = (?)`, [firstName, lastName]);
 }
 
+function getEmployeeId(fullName) {
+  let firstAndLast = fullName.split(' ');
+  
+  return db.promise().query(`SELECT id FROM employees WHERE first_name = (?) AND last_name = (?)`, [firstAndLast[0], firstAndLast[1]]);
+}
+
+async function renderChoices() {
+  // return all employee names
+  return db.promise().query(
+    `SELECT GROUP_CONCAT(first_name, (' '), last_name) AS employees
+    FROM employees;`);
+}
+
 module.exports = {
   will: {
     viewAllDepartments,
@@ -78,6 +106,8 @@ module.exports = {
     addADepartment,
     addARole,
     addAnEmployee,
-    addAnEmployeeAsManager
+    addAnEmployeeAsManager,
+    renderChoices,
+    updateEmployee
   }
 };

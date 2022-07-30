@@ -75,8 +75,16 @@ function init() {
           })
           break;
         case `Update an Employee Role`:
-          console.log(`You updated an employee role`);
-          init();
+          will.renderChoices().then(employeeNames => {
+            let [[ { employees } ]] = employeeNames
+    
+            let employeeArray = employees.split(',');
+
+            return employeeArray;
+          })
+          .then(allEmployees => {
+             pickEmployee(allEmployees);
+          })
           break;
         case `Update an Employee's Manager`:
           console.log(`Updated employee by manager`);
@@ -134,7 +142,7 @@ function init() {
         }
       ])
     }
-// first name, last name, role, manager
+
     function getEmployeeInfo() {
       return inquirer.prompt([
         {
@@ -173,7 +181,29 @@ function init() {
             return !answer.isManager;
           }
         }
+      ]);
+    }
+
+    function pickEmployee(allEmployees) {
+      return inquirer.prompt([
+        {
+          name: 'toUpdate',
+          type: 'list',
+          message: 'Which employee would you like to update?',
+          choices: allEmployees
+        },
+        {
+          name: 'newRole',
+          type: 'input',
+          message: 'Which role would you like to give this employee?'
+        }
       ])
+      .then(({ toUpdate, newRole }) => {
+        will.updateEmployee(toUpdate, newRole).then( () => {
+          console.log(`${toUpdate} has been updated to the role of ${newRole}`);
+          init();
+        });
+      })
     }
 }
 
