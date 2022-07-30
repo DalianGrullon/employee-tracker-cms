@@ -47,15 +47,19 @@ function init() {
           break;
         case `Add a Department`:
           getNameOfDepartment().then(({ departmentName }) => {
-            will.addADepartment(departmentName).then( ([rows, fields]) => {
+            will.addADepartment(departmentName).then( () => {
               console.log(`A ${departmentName} department has been added to the company database`);
               init();
             })
           });
           break;
         case `Add a Role`:
-          console.log(`You added a role`);
-          init();
+          getRoleInfo().then(({ role, salary, department }) => {
+            will.addARole(role, salary, department).then( () => {
+              console.log(`${role} with a salary of ${salary} has been added to the ${department} department.`);
+              init();
+            })
+          })
           break;
         case `Add an Employee`:
           console.log(`You added an employee`);
@@ -99,6 +103,27 @@ function init() {
           type: 'input',
           message: 'What do you want the name of the department to be?'
         }
+      ])
+    }
+
+    function getRoleInfo() {
+      return inquirer.prompt([
+        {
+          name: 'role',
+          type: 'input',
+          message: 'What do you want the name of the role to be?'
+        },
+        {
+          // be sure to parseFloat()
+          name: 'salary',
+          type: 'input',
+          message: 'What do you want the salary for this role to be?'
+        },
+        {
+          name: 'department',
+          type: 'input',
+          message: 'Which department will this role belong to?'
+        },
       ])
     }
 }

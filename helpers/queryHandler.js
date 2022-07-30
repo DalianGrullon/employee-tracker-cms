@@ -36,11 +36,21 @@ function addADepartment(department) {
   return db.promise().query(`INSERT INTO departments (name) VALUES (?)`, department);
 }
 
+async function addARole(role, salary, department) {
+  let [[ { id } ]] = await getDepartmentId(department);
+  return db.promise().query(`INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)`, [role, parseFloat(salary), id]);
+}
+
+function getDepartmentId(name) {
+  return db.promise().query(`SELECT id FROM departments WHERE name = (?)`, name);
+}
+
 module.exports = {
   will: {
     viewAllDepartments,
     viewAllRoles,
     viewAllEmployees,
-    addADepartment
+    addADepartment,
+    addARole
   }
 };
