@@ -189,7 +189,9 @@ function init() {
       ])
       .then(({ toUpdate, newRole }) => {
         will.updateEmployee(toUpdate, newRole).then( () => {
+          console.log('\n');
           console.log(`${toUpdate} has been updated to the role of ${newRole}`);
+          console.log('\n');
           init();
         });
       })
