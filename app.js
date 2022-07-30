@@ -49,7 +49,9 @@ function init() {
         case `Add a Department`:
           getNameOfDepartment().then(({ departmentName }) => {
             will.addADepartment(departmentName).then( () => {
-              console.log(`A ${departmentName} department has been added to the company database`);
+              console.log('\n');
+              console.log(`The ${departmentName} department has been added to the company database`);
+              console.log('\n');
               init();
             })
           });
