@@ -24,8 +24,9 @@ function viewAllRoles() {
 function viewAllEmployees() {
   return db.promise().query(
     `SELECT
-      employees.id, employees.first_name, employees.last_name, roles.title, departments.name, roles.salary,
-      CONCAT(managers.first_name, (' '), managers.last_name) AS managers
+      employees.id AS Employee_ID, employees.first_name AS First_Name, employees.last_name AS Last_Name,
+      roles.title AS Job, departments.name AS Department, roles.salary AS Job_Salary,
+      CONCAT(managers.first_name, (' '), managers.last_name) AS Manager
     FROM employees
     INNER JOIN roles ON employees.role_id = roles.id
     INNER JOIN departments ON roles.department_id = departments.id

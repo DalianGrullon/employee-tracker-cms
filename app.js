@@ -40,7 +40,9 @@ function init() {
           break;
         case `View all Employees`:
           will.viewAllEmployees().then( ([rows, fields]) => {
+            console.log('\n');
             console.table(rows);
+            console.log('\n');
             init();
           })
           break;
