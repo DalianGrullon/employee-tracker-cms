@@ -62,8 +62,17 @@ function init() {
           })
           break;
         case `Add an Employee`:
-          console.log(`You added an employee`);
-          init();
+          getEmployeeInfo().then(({ employeeFirstName, employeeLastName, employeeRole, isManager, managerFirstName, managerLastName }) => {
+            if (isManager) {
+              will.addAnEmployeeAsManager(employeeFirstName, employeeLastName, employeeRole).then( () => {
+                console.log(`Successfully added ${employeeFirstName} ${employeeLastName} to company database with the role of ${employeeRole}`);
+              })
+            } else {
+              will.addAnEmployee(employeeFirstName, employeeLastName, employeeRole, isManager, managerFirstName, managerLastName).then( () => {
+                console.log(`Successfully added ${employeeFirstName} ${employeeLastName} to company database with the role of ${employeeRole} under ${managerFirstName} ${managerLastName}`);
+              })
+            }
+          })
           break;
         case `Update an Employee Role`:
           console.log(`You updated an employee role`);
@@ -114,7 +123,6 @@ function init() {
           message: 'What do you want the name of the role to be?'
         },
         {
-          // be sure to parseFloat()
           name: 'salary',
           type: 'input',
           message: 'What do you want the salary for this role to be?'
@@ -123,7 +131,48 @@ function init() {
           name: 'department',
           type: 'input',
           message: 'Which department will this role belong to?'
+        }
+      ])
+    }
+// first name, last name, role, manager
+    function getEmployeeInfo() {
+      return inquirer.prompt([
+        {
+          name: 'employeeFirstName',
+          type: 'input',
+          message: 'What is the first name of this employee?'
         },
+        {
+          name: 'employeeLastName',
+          type: 'input',
+          message: 'What is the last name of this employee?'
+        },
+        {
+          name: 'employeeRole',
+          type: 'input',
+          message: `What is this employee's role?`
+        },
+        {
+          name: 'isManager',
+          type: 'confirm',
+          message: 'Is this employee a manager?'
+        },
+        {
+          name: 'managerFirstName',
+          type: 'input',
+          message: `What is the first name of the manager?`,
+          when(answer) {
+            return !answer.isManager;
+          }
+        },
+        {
+          name: 'managerLastName',
+          type: 'input',
+          message: `What is the last name of the manager?`,
+          when(answer) {
+            return !answer.isManager;
+          }
+        }
       ])
     }
 }

@@ -41,8 +41,33 @@ async function addARole(role, salary, department) {
   return db.promise().query(`INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)`, [role, parseFloat(salary), id]);
 }
 
+async function addAnEmployee(employeeFirstName, employeeLastName, employeeRole, hasManager, managerFirstName, managerLastName) {
+  let [[ { id: roleId } ]] = await getRoleId(employeeRole);
+  let [[ { id: managerId } ]] = await getManagerId(managerFirstName, managerLastName);
+  
+  return db.promise().query(
+    `INSERT INTO employees (first_name, last_name, role_id, manager_id) 
+    VALUES (?, ?, ?, ?)`, [employeeFirstName, employeeLastName, roleId, managerId]);
+}
+
+async function addAnEmployeeAsManager(employeeFirstName, employeeLastName, employeeRole) {
+  let [[ { id: roleId } ]] = await getRoleId(employeeRole);
+  
+  return db.promise().query(
+    `INSERT INTO employees (first_name, last_name, role_id) 
+    VALUES (?, ?, ?)`, [employeeFirstName, employeeLastName, roleId]);
+}
+
 function getDepartmentId(name) {
   return db.promise().query(`SELECT id FROM departments WHERE name = (?)`, name);
+}
+
+function getRoleId(nameOfRole) {
+  return db.promise().query(`SELECT id FROM roles WHERE title = (?)`, nameOfRole);
+}
+
+function getManagerId(firstName, lastName) {
+  return db.promise().query(`SELECT id FROM managers WHERE first_name = (?) AND last_name = (?)`, [firstName, lastName]);
 }
 
 module.exports = {
@@ -51,6 +76,8 @@ module.exports = {
     viewAllRoles,
     viewAllEmployees,
     addADepartment,
-    addARole
+    addARole,
+    addAnEmployee,
+    addAnEmployeeAsManager
   }
 };
