@@ -32,7 +32,9 @@ function init() {
           break;
         case `View all Roles`:
           will.viewAllRoles().then( ([rows, fields]) => {
+            console.log('\n');
             console.table(rows);
+            console.log('\n');
             init();
           });
           break;

@@ -6,7 +6,7 @@ const Choices = require('inquirer/lib/objects/choices');
 function viewAllDepartments() {
   return db.promise().query(
     `SELECT 
-      name AS Departments, id AS IDs
+      name AS Department, id AS Department_ID
     FROM departments;`
   );
 }
@@ -14,7 +14,7 @@ function viewAllDepartments() {
 function viewAllRoles() {
   return db.promise().query(
     `SELECT
-      roles.id, roles.title, roles.salary, departments.name
+      roles.title AS Job, roles.id AS Job_ID, departments.name AS Department, roles.salary AS Job_Salary
     FROM roles
     INNER JOIN departments
     ON roles.department_id = departments.id;`
