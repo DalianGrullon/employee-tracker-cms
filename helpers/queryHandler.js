@@ -91,7 +91,7 @@ function getEmployeeId(fullName) {
   return db.promise().query(`SELECT id FROM employees WHERE first_name = (?) AND last_name = (?)`, [firstAndLast[0], firstAndLast[1]]);
 }
 
-async function renderChoices() {
+async function renderEmployees() {
   // return all employee names
   return db.promise().query(
     `SELECT GROUP_CONCAT(first_name, (' '), last_name) AS employees
@@ -107,7 +107,7 @@ module.exports = {
     addARole,
     addAnEmployee,
     addAnEmployeeAsManager,
-    renderChoices,
+    renderEmployees,
     updateEmployee
   }
 };

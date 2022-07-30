@@ -75,7 +75,7 @@ function init() {
           })
           break;
         case `Update an Employee Role`:
-          will.renderChoices().then(employeeNames => {
+          will.renderEmployees().then(employeeNames => {
             let [[ { employees } ]] = employeeNames
     
             let employeeArray = employees.split(',');
@@ -138,6 +138,7 @@ function init() {
         {
           name: 'department',
           type: 'input',
+          // render choices from database
           message: 'Which department will this role belong to?'
         }
       ])
@@ -158,6 +159,7 @@ function init() {
         {
           name: 'employeeRole',
           type: 'input',
+          // render choices from database
           message: `What is this employee's role?`
         },
         {
@@ -165,6 +167,7 @@ function init() {
           type: 'confirm',
           message: 'Is this employee a manager?'
         },
+        // render choices from database rather than parse first and last name
         {
           name: 'managerFirstName',
           type: 'input',
@@ -192,6 +195,7 @@ function init() {
           message: 'Which employee would you like to update?',
           choices: allEmployees
         },
+        // render choices from database
         {
           name: 'newRole',
           type: 'input',
