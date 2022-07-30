@@ -12,7 +12,6 @@ function viewAllDepartments() {
 
 function viewAllRoles() {
   return db.promise().query(
-    // job title, role id, department role belongs to, salary for role
     `SELECT
       roles.id, roles.title, roles.salary, departments.name
     FROM roles
@@ -21,9 +20,29 @@ function viewAllRoles() {
   );
 }
 
+function viewAllEmployees() {
+  return db.promise().query(
+    `SELECT
+      employees.id, employees.first_name, employees.last_name, roles.title, departments.name, roles.salary,
+      CONCAT(managers.first_name, (' '), managers.last_name) AS managers
+    FROM employees
+    INNER JOIN roles ON employees.role_id = roles.id
+    INNER JOIN departments ON roles.department_id = departments.id
+    LEFT JOIN managers ON managers.id = employees.manager_id`
+  );
+}
+
+function addADepartment() {
+  return db.promise().query(
+    ``
+  );
+}
+
 module.exports = {
   will: {
     viewAllDepartments,
-    viewAllRoles
+    viewAllRoles,
+    viewAllEmployees,
+    addADepartment
   }
 };

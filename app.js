@@ -36,16 +36,20 @@ function init() {
         case `View all Roles`:
           will.viewAllRoles().then( ([rows, fields]) => {
             console.table(rows);
-            // init();
+            init();
           });
           break;
         case `View all Employees`:
-          console.log(`Here's all employees`);
-          init();
+          will.viewAllEmployees().then( ([rows, fields]) => {
+            console.table(rows);
+            init();
+          })
           break;
         case `Add a Department`:
-          console.log(`You added a department`);
-          init();
+          will.addADepartment().then( ([rows, fields]) => {
+            console.table(rows);
+            // init();
+          })
           break;
         case `Add a Role`:
           console.log(`You added a role`);
