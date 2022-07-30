@@ -32,10 +32,8 @@ function viewAllEmployees() {
   );
 }
 
-function addADepartment() {
-  return db.promise().query(
-    ``
-  );
+function addADepartment(department) {
+  return db.promise().query(`INSERT INTO departments (name) VALUES (?)`, department);
 }
 
 module.exports = {

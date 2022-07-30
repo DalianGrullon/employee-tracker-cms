@@ -1,3 +1,5 @@
+USE company_db;
+
 INSERT INTO departments (id, name)
 VALUES (1, 'Human Resources'),
        (2, 'Engineering'),
@@ -27,4 +29,4 @@ VALUES (21, 'John', 'Doe', 10, NULL),
        (22, 'John', 'Smite', 11, 21);
 
 INSERT INTO managers (id, first_name, last_name, role_id)
-VALUES (21, 'John', 'Doe', 10,)
+VALUES (21, 'John', 'Doe', 10);

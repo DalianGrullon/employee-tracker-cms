@@ -46,10 +46,12 @@ function init() {
           })
           break;
         case `Add a Department`:
-          will.addADepartment().then( ([rows, fields]) => {
-            console.table(rows);
-            // init();
-          })
+          getNameOfDepartment().then(({ departmentName }) => {
+            will.addADepartment(departmentName).then( ([rows, fields]) => {
+              console.log(`A ${departmentName} department has been added to the company database`);
+              init();
+            })
+          });
           break;
         case `Add a Role`:
           console.log(`You added a role`);
@@ -89,6 +91,16 @@ function init() {
           break;
       }
     });
+
+    function getNameOfDepartment() {
+      return inquirer.prompt([
+        {
+          name: 'departmentName',
+          type: 'input',
+          message: 'What do you want the name of the department to be?'
+        }
+      ])
+    }
 }
 
 init();
