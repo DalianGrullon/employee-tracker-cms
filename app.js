@@ -1,30 +1,90 @@
 const inquirer = require('inquirer');
-
-const lib = require('./lib/index');
-const helpers = require('./helpers/index');
-
-// destructuring resources from other directories
-const { to } = lib.questions;
-const Query = lib.Query;
-const { getMethod } = helpers;
+const { will } = require('./helpers/queryHandler');
 
 function init() {
   inquirer
-    .prompt(to)
+    .prompt([
+      {
+        name: 'to',
+        type: 'list',
+        message: 'What would you like to do?',
+        choices: [
+          `View all Departments`, 
+          `View all Roles`, 
+          `View all Employees`,
+          `Add a Department`,
+          `Add a Role`,
+          `Add an Employee`,
+          `Update an Employee Role`,
+          `Update an Employee's Manager`,
+          `View Employees by Manager`,
+          `View Employees by Department`,
+          `Delete Departments, Roles, and Employees`,
+          `View Total Budget of a Department`,
+          `Exit`
+        ]
+      }
+    ])
     .then(wants => {
-      const { choices } = to;
-
-      // make databse query asynchronus
-      choices.forEach(choice => {
-        if (wants.to === choice) {
-          let query = new Query(choice);
-          eval(`query.${getMethod(choice)}`).then((results) => {
-            console.table(results);
+      switch (wants.to) {
+        case `View all Departments`:
+          will.viewAllDepartments().then( ([rows, fields]) => {
+            console.table(rows);
             init();
           });
-        }
-      });
-    })
+          break;
+        case `View all Roles`:
+          will.viewAllRoles().then( ([rows, fields]) => {
+            console.table(rows);
+            // init();
+          });
+          break;
+        case `View all Employees`:
+          console.log(`Here's all employees`);
+          init();
+          break;
+        case `Add a Department`:
+          console.log(`You added a department`);
+          init();
+          break;
+        case `Add a Role`:
+          console.log(`You added a role`);
+          init();
+          break;
+        case `Add an Employee`:
+          console.log(`You added an employee`);
+          init();
+          break;
+        case `Update an Employee Role`:
+          console.log(`You updated an employee role`);
+          init();
+          break;
+        case `Update an Employee's Manager`:
+          console.log(`Updated employee by manager`);
+          init();
+          break;
+        case `View Employees by Manager`:
+          console.log(`Every employee by their manager`);
+          init();
+          break;
+        case `View Employees by Department`:
+          console.log(`Every employee by department`);
+          init();
+          break;
+        case `Delete Departments, Roles, and Employees`:
+          console.log(`Which would you like to delete?`);
+          init();
+          break;
+        case `View Total Budget of a Department`:
+          console.log(`1 dollar!`);
+          init();
+          break;
+        
+        default:
+          console.log('Goodbye');
+          break;
+      }
+    });
 }
 
 init();
