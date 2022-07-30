@@ -6,7 +6,7 @@ const Choices = require('inquirer/lib/objects/choices');
 function viewAllDepartments() {
   return db.promise().query(
     `SELECT 
-      id, name 
+      name AS Departments, id AS IDs
     FROM departments;`
   );
 }

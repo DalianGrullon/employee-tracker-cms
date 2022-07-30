@@ -16,11 +16,6 @@ function init() {
           `Add a Role`,
           `Add an Employee`,
           `Update an Employee Role`,
-          `Update an Employee's Manager`,
-          `View Employees by Manager`,
-          `View Employees by Department`,
-          `Delete Departments, Roles, and Employees`,
-          `View Total Budget of a Department`,
           `Exit`
         ]
       }
@@ -29,7 +24,9 @@ function init() {
       switch (wants.to) {
         case `View all Departments`:
           will.viewAllDepartments().then( ([rows, fields]) => {
+            console.log('\n');
             console.table(rows);
+            console.log('\n');
             init();
           });
           break;
@@ -86,26 +83,6 @@ function init() {
              pickEmployee(allEmployees);
           })
           break;
-        case `Update an Employee's Manager`:
-          console.log(`Updated employee by manager`);
-          init();
-          break;
-        case `View Employees by Manager`:
-          console.log(`Every employee by their manager`);
-          init();
-          break;
-        case `View Employees by Department`:
-          console.log(`Every employee by department`);
-          init();
-          break;
-        case `Delete Departments, Roles, and Employees`:
-          console.log(`Which would you like to delete?`);
-          init();
-          break;
-        case `View Total Budget of a Department`:
-          console.log(`1 dollar!`);
-          init();
-          break;
         
         default:
           console.log('Goodbye');
@@ -138,7 +115,6 @@ function init() {
         {
           name: 'department',
           type: 'input',
-          // render choices from database
           message: 'Which department will this role belong to?'
         }
       ])
@@ -159,7 +135,6 @@ function init() {
         {
           name: 'employeeRole',
           type: 'input',
-          // render choices from database
           message: `What is this employee's role?`
         },
         {
@@ -167,7 +142,6 @@ function init() {
           type: 'confirm',
           message: 'Is this employee a manager?'
         },
-        // render choices from database rather than parse first and last name
         {
           name: 'managerFirstName',
           type: 'input',
@@ -195,7 +169,6 @@ function init() {
           message: 'Which employee would you like to update?',
           choices: allEmployees
         },
-        // render choices from database
         {
           name: 'newRole',
           type: 'input',
