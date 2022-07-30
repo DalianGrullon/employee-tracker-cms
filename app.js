@@ -59,7 +59,9 @@ function init() {
         case `Add a Role`:
           getRoleInfo().then(({ role, salary, department }) => {
             will.addARole(role, salary, department).then( () => {
+              console.log('\n');
               console.log(`${role} with a salary of ${salary} has been added to the ${department} department.`);
+              console.log('\n');
               init();
             })
           })
@@ -68,11 +70,15 @@ function init() {
           getEmployeeInfo().then(({ employeeFirstName, employeeLastName, employeeRole, isManager, managerFirstName, managerLastName }) => {
             if (isManager) {
               will.addAnEmployeeAsManager(employeeFirstName, employeeLastName, employeeRole).then( () => {
+                console.log('\n');
                 console.log(`Successfully added ${employeeFirstName} ${employeeLastName} to company database with the role of ${employeeRole}`);
+                console.log('\n');
               })
             } else {
               will.addAnEmployee(employeeFirstName, employeeLastName, employeeRole, isManager, managerFirstName, managerLastName).then( () => {
+                console.log('\n');
                 console.log(`Successfully added ${employeeFirstName} ${employeeLastName} to company database with the role of ${employeeRole} under ${managerFirstName} ${managerLastName}`);
+                console.log('\n');
               })
             }
           })
@@ -111,7 +117,7 @@ function init() {
         {
           name: 'role',
           type: 'input',
-          message: 'What do you want the name of the role to be?'
+          message: 'What do you want the name of this role to be?'
         },
         {
           name: 'salary',
@@ -151,7 +157,7 @@ function init() {
         {
           name: 'managerFirstName',
           type: 'input',
-          message: `What is the first name of the manager?`,
+          message: `What is the first name of the employee's manager?`,
           when(answer) {
             return !answer.isManager;
           }
@@ -159,7 +165,7 @@ function init() {
         {
           name: 'managerLastName',
           type: 'input',
-          message: `What is the last name of the manager?`,
+          message: `What is the last name of the employee's manager?`,
           when(answer) {
             return !answer.isManager;
           }
