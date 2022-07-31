@@ -1,8 +1,8 @@
 const mysql = require('mysql2');
 const db = require('../config/connection');
 const cTable = require('console.table');
-const Choices = require('inquirer/lib/objects/choices');
 
+// View data in database
 function viewAllDepartments() {
   return db.promise().query(
     `SELECT 
@@ -16,8 +16,7 @@ function viewAllRoles() {
     `SELECT
       roles.title AS Role, roles.id AS Role_ID, departments.name AS Department, roles.salary AS Role_Salary
     FROM roles
-    INNER JOIN departments
-    ON roles.department_id = departments.id;`
+    INNER JOIN departments ON roles.department_id = departments.id;`
   );
 }
 
@@ -34,6 +33,7 @@ function viewAllEmployees() {
   );
 }
 
+// Add data into database
 function addADepartment(department) {
   return db.promise().query(`INSERT INTO departments (name) VALUES (?)`, department);
 }
@@ -60,6 +60,7 @@ async function addAnEmployeeAsManager(employeeFirstName, employeeLastName, emplo
     VALUES (?, ?, ?)`, [employeeFirstName, employeeLastName, roleId]);
 }
 
+// Update data in database
 async function updateEmployee(name, role) {
   let [[ { id: roleId } ]] = await getRoleId(role);
   let [[ { id: employeeId } ]] = await getEmployeeId(name);
@@ -73,7 +74,7 @@ async function updateEmployee(name, role) {
 }
 
 
-// More helper functions
+// Get data from database
 function getDepartmentId(name) {
   return db.promise().query(`SELECT id FROM departments WHERE name = (?)`, name);
 }
@@ -92,8 +93,7 @@ function getEmployeeId(fullName) {
   return db.promise().query(`SELECT id FROM employees WHERE first_name = (?) AND last_name = (?)`, [firstAndLast[0], firstAndLast[1]]);
 }
 
-async function renderEmployees() {
-  // return all employee names
+async function getEmployees() {
   return db.promise().query(
     `SELECT GROUP_CONCAT(first_name, (' '), last_name) AS employees
     FROM employees;`);
@@ -108,7 +108,7 @@ module.exports = {
     addARole,
     addAnEmployee,
     addAnEmployeeAsManager,
-    renderEmployees,
+    getEmployees,
     updateEmployee
   }
 };

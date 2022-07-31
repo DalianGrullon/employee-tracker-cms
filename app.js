@@ -31,6 +31,7 @@ function init() {
             init();
           });
           break;
+
         case `View all Roles`:
           will.viewAllRoles().then( ([rows, fields]) => {
             console.log('\n');
@@ -39,6 +40,7 @@ function init() {
             init();
           });
           break;
+
         case `View all Employees`:
           will.viewAllEmployees().then( ([rows, fields]) => {
             console.log('\n');
@@ -47,6 +49,7 @@ function init() {
             init();
           })
           break;
+
         case `Add a Department`:
           getNameOfDepartment().then(({ departmentName }) => {
             will.addADepartment(departmentName).then( () => {
@@ -57,6 +60,7 @@ function init() {
             })
           });
           break;
+
         case `Add a Role`:
           getRoleInfo().then(({ role, salary, department }) => {
             will.addARole(role, salary, department).then( () => {
@@ -67,6 +71,7 @@ function init() {
             })
           })
           break;
+
         case `Add an Employee`:
           getEmployeeInfo().then(({ employeeFirstName, employeeLastName, employeeRole, isManager, managerFirstName, managerLastName }) => {
             if (isManager) {
@@ -84,8 +89,9 @@ function init() {
             }
           })
           break;
+
         case `Update an Employee Role`:
-          will.renderEmployees().then(employeeNames => {
+          will.getEmployees().then(employeeNames => {
             let [[ { employees } ]] = employeeNames
     
             let employeeArray = employees.split(',');
