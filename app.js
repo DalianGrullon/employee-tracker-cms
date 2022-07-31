@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const { will } = require('./helpers/queryHandler');
+const { numVerify, noSpace } = require('./helpers/inputValidate');
 
 function init() {
   inquirer
@@ -122,7 +123,8 @@ function init() {
         {
           name: 'salary',
           type: 'input',
-          message: 'What do you want the salary for this role to be?'
+          message: 'What do you want the salary for this role to be?',
+          validate: numVerify
         },
         {
           name: 'department',
@@ -137,12 +139,14 @@ function init() {
         {
           name: 'employeeFirstName',
           type: 'input',
-          message: 'What is the first name of this employee?'
+          message: 'What is the first name of this employee?',
+          validate: noSpace
         },
         {
           name: 'employeeLastName',
           type: 'input',
-          message: 'What is the last name of this employee?'
+          message: 'What is the last name of this employee?',
+          validate: noSpace
         },
         {
           name: 'employeeRole',
@@ -160,7 +164,8 @@ function init() {
           message: `What is the first name of the employee's manager?`,
           when(answer) {
             return !answer.isManager;
-          }
+          },
+          validate: noSpace
         },
         {
           name: 'managerLastName',
@@ -168,7 +173,8 @@ function init() {
           message: `What is the last name of the employee's manager?`,
           when(answer) {
             return !answer.isManager;
-          }
+          },
+          validate: noSpace
         }
       ]);
     }
