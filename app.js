@@ -79,12 +79,14 @@ function init() {
                 console.log('\n');
                 console.log(`Successfully added ${employeeFirstName} ${employeeLastName} to company database with the role of ${employeeRole}`);
                 console.log('\n');
+                init();
               })
             } else {
               will.addAnEmployee(employeeFirstName, employeeLastName, employeeRole, isManager, managerFirstName, managerLastName).then( () => {
                 console.log('\n');
                 console.log(`Successfully added ${employeeFirstName} ${employeeLastName} to company database with the role of ${employeeRole} under ${managerFirstName} ${managerLastName}`);
                 console.log('\n');
+                init();
               })
             }
           })
