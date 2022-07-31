@@ -91,20 +91,16 @@ function init() {
           break;
 
         case `Update an Employee Role`:
-          will.getEmployees().then(employeeNames => {
-            let [[ { employees } ]] = employeeNames
-    
-            let employeeArray = employees.split(',');
-
-            return employeeArray;
-          })
-          .then(allEmployees => {
-             pickEmployee(allEmployees);
-          })
+          will.getEmployees()
+          .then(([[ { employees: asString } ]]) => asString.split(','))
+          .then(employeesArray => pickEmployee(employeesArray));
           break;
         
         default:
-          console.log('Goodbye');
+          console.log(
+            `Thanks for using Employee Tracker!
+            Goodbye...`
+          );
           break;
       }
     });
@@ -185,13 +181,13 @@ function init() {
       ]);
     }
 
-    function pickEmployee(allEmployees) {
+    function pickEmployee(employees) {
       return inquirer.prompt([
         {
-          name: 'toUpdate',
+          name: 'employee',
           type: 'list',
           message: 'Which employee would you like to update?',
-          choices: allEmployees
+          choices: employees
         },
         {
           name: 'newRole',
@@ -199,10 +195,10 @@ function init() {
           message: 'Which role would you like to give this employee?'
         }
       ])
-      .then(({ toUpdate, newRole }) => {
-        will.updateEmployee(toUpdate, newRole).then( () => {
+      .then(({ employee, newRole }) => {
+        will.updateEmployee(employee, newRole).then( () => {
           console.log('\n');
-          console.log(`${toUpdate} has been updated to the role of ${newRole}`);
+          console.log(`${employee} has been updated to the role of ${newRole}`);
           console.log('\n');
           init();
         });
