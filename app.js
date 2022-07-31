@@ -24,7 +24,7 @@ function init() {
     .then(wants => {
       switch (wants.to) {
         case `View all Departments`:
-          will.viewAllDepartments().then( ([rows, fields]) => {
+          will.viewAllDepartments().then( ([rows]) => {
             console.log('\n');
             console.table(rows);
             console.log('\n');
@@ -33,7 +33,7 @@ function init() {
           break;
 
         case `View all Roles`:
-          will.viewAllRoles().then( ([rows, fields]) => {
+          will.viewAllRoles().then( ([rows]) => {
             console.log('\n');
             console.table(rows);
             console.log('\n');
@@ -42,7 +42,7 @@ function init() {
           break;
 
         case `View all Employees`:
-          will.viewAllEmployees().then( ([rows, fields]) => {
+          will.viewAllEmployees().then( ([rows]) => {
             console.log('\n');
             console.table(rows);
             console.log('\n');
